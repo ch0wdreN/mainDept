@@ -1,17 +1,28 @@
 import type { Component } from 'solid-js'
-import { Router, Routes, Route } from '@solidjs/router'
-
+import { Router, Routes, useRoutes } from '@solidjs/router'
 import { lazy } from 'solid-js'
-const topPage = lazy(() => import("@/top"));
+
+const top = lazy(() => import('@/Top'))
+const game = lazy(() => import('@/Game'))
+
+const routes = [
+  {
+    path: '/',
+    component: top,
+  },
+  {
+    path: '/game',
+    component: game,
+  },
+]
 
 const App: Component = () => {
+  const Routes = useRoutes(routes)
   return (
     <>
       <h1>キッキングスナイパー</h1>
       <Router>
-        <Routes>
-          <Route path="/" component={topPage} />
-        </Routes>
+        <Routes />
       </Router>
     </>
   )
