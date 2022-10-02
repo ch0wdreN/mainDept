@@ -1,0 +1,9 @@
+{
+  "importMap": "./import_map.json",
+  "fmt": {
+    "options": {
+      "singleQuote": true,
+      "useTabs": false
+    }
+  }
+}

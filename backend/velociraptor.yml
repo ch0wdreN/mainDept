@@ -1,0 +1,23 @@
+allow:
+  - run
+  - write
+  - read
+  - net
+  - env
+
+scripts:
+  server:
+    desc: run server.ts
+    cmd: deno run --watch --unstable ./server.ts
+
+  client:
+    desc: run client.ts
+    cmd: deno run --watch --unstable ./client.ts
+
+  fmt:
+    desc: deno fmt
+    cmd: deno fmt
+
+  test:
+    desc: deno test
+    cmd: deno test --watch .

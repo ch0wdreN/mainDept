@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "websocket": "https://deno.land/x/websocket@v0.1.4/mod.ts",
+    "io": "https://deno.land/std@0.157.0/io/mod.ts",
+    "utf8": "https://deno.land/std@0.51.0/encoding/utf8.ts",
+    "textproto": "https://deno.land/std@0.157.0/textproto/mod.ts",
+    "color": "https://deno.land/std@0.157.0/fmt/colors.ts"
+  }
+}
