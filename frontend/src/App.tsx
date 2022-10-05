@@ -4,6 +4,8 @@ import { lazy } from 'solid-js'
 
 const top = lazy(() => import('@/Top'))
 const game = lazy(() => import('@/Game'))
+const admin = lazy(() => import('@/Admin'))
+const rank = lazy(() => import('@/Rank'))
 
 const routes = [
   {
@@ -13,6 +15,14 @@ const routes = [
   {
     path: '/game',
     component: game,
+  },
+  {
+    path: '/admin',
+    component: admin,
+  },
+  {
+    path: '/rank',
+    component: rank,
   },
 ]
 
