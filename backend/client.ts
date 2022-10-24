@@ -1,4 +1,3 @@
-import { StandardWebSocketClient, WebSocketClient } from 'websocket';
 import { encode } from 'utf8';
 import { BufReader } from 'io';
 import { TextProtoReader } from 'textproto';
@@ -6,8 +5,8 @@ import { green, red } from 'color';
 import { Score } from './models/Score.ts';
 import { Connection } from './models/Connection.ts';
 
-const endpoint = 'ws://127.0.0.1:8080';
-const ws: WebSocketClient = new StandardWebSocketClient(endpoint);
+//const endpoint = 'wss://main-dept-server.deno.dev/';
+//const ws: WebSocketClient = new StandardWebSocketClient(endpoint);
 
 const onMessage = async (event: MessageEvent) => {
   const receiveData: Connection | Score = JSON.parse(event.data);
@@ -46,24 +45,37 @@ const cli = async (event: MessageEvent): Promise<void> => {
       if (line === null) break;
       const receivedData = JSON.parse(event.data);
       const result: Score = {type: 'result', name: receivedData.name, score: parseInt(line)}
-      ws.send(JSON.stringify(result))
+      socket.send(JSON.stringify(result))
       await Deno.stdout.write(encode(green(`send: ${JSON.stringify(result)}\n`)))
       }
     }
   }
 
 
-ws.on('open', async () => {
+// ws.on('open', async () => {
+//   await Deno.stdout.write(encode('ws connected\n'));
+// });
+// ws.on('message', async function (event: MessageEvent) {
+//   await onMessage(event);
+//   try {
+//     await cli(event).catch(console.error);
+//     if (!ws.isClosed) {
+//       await ws.close(1000).catch(console.error)
+//     }
+//   }catch (error) {
+//     await Deno.stdout.write(encode(red(`Could not connect to ws: ${error}`)));
+//   }
+// });
+
+const socket = new WebSocket('wss://main-dept-server.deno.dev');
+socket.onopen = async () => {
   await Deno.stdout.write(encode('ws connected\n'));
-});
-ws.on('message', async function (event: MessageEvent) {
-  await onMessage(event);
+}
+socket.onmessage = async (e:MessageEvent) => {
+  await onMessage(e)
   try {
-    await cli(event).catch(console.error);
-    if (!ws.isClosed) {
-      await ws.close(1000).catch(console.error)
-    }
-  }catch (error) {
-    await Deno.stdout.write(encode(red(`Could not connect to ws: ${error}`)));
+    await cli(e).catch(console.error);
+  } catch (error) {
+   await Deno.stdout.write(encode(red(`Could not connect to ws: ${error}`)))
   }
-});
+}
