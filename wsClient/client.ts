@@ -5,9 +5,6 @@ import { green, red } from 'color';
 import { Score } from './models/Score.ts';
 import { Connection } from './models/Connection.ts';
 
-//const endpoint = 'wss://main-dept-server.deno.dev/';
-//const ws: WebSocketClient = new StandardWebSocketClient(endpoint);
-
 const onMessage = async (event: MessageEvent) => {
   const receiveData: Connection | Score = JSON.parse(event.data);
   switch (receiveData.type) {
@@ -32,7 +29,7 @@ const onMessage = async (event: MessageEvent) => {
       await Deno.stdout.write(encode('score:  '));
       break;
     default:
-      await Deno.stdout.write(encode(`received: ${event.data}`));
+      await Deno.stdout.write(encode(`received: ${JSON.parse(event.data)}\n`));
   }
 };
 
@@ -44,38 +41,32 @@ const cli = async (event: MessageEvent): Promise<void> => {
     else {
       if (line === null) break;
       const receivedData = JSON.parse(event.data);
-      const result: Score = {type: 'result', name: receivedData.name, score: parseInt(line)}
-      socket.send(JSON.stringify(result))
-      await Deno.stdout.write(encode(green(`send: ${JSON.stringify(result)}\n`)))
-      }
+      const result: Score = {
+        type: 'result',
+        name: receivedData.name,
+        score: parseInt(line),
+      };
+      socket.send(JSON.stringify(result));
+      await Deno.stdout.write(
+        encode(green(`send: ${JSON.stringify(result)}\n`)),
+      );
     }
   }
+};
 
-
-// ws.on('open', async () => {
-//   await Deno.stdout.write(encode('ws connected\n'));
-// });
-// ws.on('message', async function (event: MessageEvent) {
-//   await onMessage(event);
-//   try {
-//     await cli(event).catch(console.error);
-//     if (!ws.isClosed) {
-//       await ws.close(1000).catch(console.error)
-//     }
-//   }catch (error) {
-//     await Deno.stdout.write(encode(red(`Could not connect to ws: ${error}`)));
-//   }
-// });
-
-const socket = new WebSocket('wss://main-dept-server.deno.dev');
-socket.onopen = async () => {
-  await Deno.stdout.write(encode('ws connected\n'));
-}
-socket.onmessage = async (e:MessageEvent) => {
-  await onMessage(e)
+const socket = new WebSocket('wss://main-dept-api.deno.dev/ws');
+socket.onopen = () => {
+  const connection: Connection = {
+    type: 'connection',
+    message: 'ws connected!'
+  };
+  socket.send(JSON.stringify(connection));
+};
+socket.onmessage = async (e: MessageEvent) => {
+  await onMessage(e);
   try {
     await cli(e).catch(console.error);
   } catch (error) {
-   await Deno.stdout.write(encode(red(`Could not connect to ws: ${error}`)))
+    await Deno.stdout.write(encode(red(`Could not connect to ws: ${error}`)));
   }
-}
+};
