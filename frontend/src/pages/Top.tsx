@@ -20,6 +20,7 @@ const Top: Component = () => {
           <button onClick={() => navigate('/game', {state: {name: name()}})}>次へ</button>
         </div>
       </form>
+      <input type='button' onClick={() => navigate('/admin')} value='管理者'/>
     </>
   )
 }
