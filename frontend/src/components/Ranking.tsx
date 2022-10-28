@@ -7,7 +7,7 @@ const Ranking: Component<{ data: Result[]; name: string }> = (props) => {
     <>
       <For each={props.data}>
         {(result: Result) => {
-          const { name, score } = result
+          const { name, score } = result;
           if (name === props.name) {
             return (
               <li class='currentUser'>

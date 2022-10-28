@@ -1,9 +1,10 @@
 import type { Component } from 'solid-js'
-import { useLocation } from '@solidjs/router'
+import { useNavigate, useLocation } from '@solidjs/router'
 import Ranking from '@c/Ranking'
 import axios from 'axios'
 import { createEffect, createSignal } from 'solid-js'
 import { Result } from '~/models/Result'
+import '~/styles/Rank.scss'
 
 const API_URL = 'https://main-dept-api.deno.dev'
 
@@ -23,11 +24,16 @@ const Rank: Component = () => {
       setAllResult(res.data)
     })
   })
+  const navigate = useNavigate();
+
   return (
     <>
-      <ol>
-        <Ranking data={allResult()} name={name()} />
-      </ol>
+     <div class='ranking'>
+       <ol>
+         <Ranking data={allResult()} name={name()} />
+       </ol>
+     </div>
+      <button onClick={() => navigate('/')}>Topへ戻る</button>
     </>
   )
 }

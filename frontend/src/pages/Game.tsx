@@ -20,7 +20,7 @@ const Game: Component = () => {
     }
   }
   const navigate = useNavigate()
-  const endpoint = 'ws://localhost:8080'
+  const endpoint = 'wss://main-dept-api.deno.dev/ws'
   const ws = new WebSocket(endpoint)
   const user: Score = {
     type: 'name',
@@ -31,7 +31,7 @@ const Game: Component = () => {
     ws.send(JSON.stringify(user))
   }
   ws.onmessage = (e) => {
-    console.log(e.data)
+    console.log(JSON.parse(e.data))
     const receivedData = JSON.parse(e.data)
     if (receivedData.type === 'result') {
       setScore(receivedData.score)
