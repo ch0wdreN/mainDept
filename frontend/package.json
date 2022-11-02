@@ -21,6 +21,8 @@
   "dependencies": {
     "@solidjs/router": "^0.4.3",
     "axios": "^0.27.2",
-    "solid-js": "^1.5.1"
+    "js-confetti": "^0.11.0",
+    "solid-js": "^1.5.1",
+    "uuidv4": "^6.2.13"
   }
 }

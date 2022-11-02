@@ -4,9 +4,9 @@ import { Score } from '~/models/Score'
 import { createSignal, Show } from 'solid-js'
 import axios from 'axios'
 import { Result } from '~/models/Result'
+import '~/styles/Game.scss'
 
 const API_URL = 'https://main-dept-api.deno.dev'
-
 const Game: Component = () => {
   const [score, setScore] = createSignal(0)
   const [isStart, setIsStart] = createSignal(false)
@@ -28,6 +28,7 @@ const Game: Component = () => {
   }
   ws.onopen = () => {
     console.log('ws connected')
+    while (ws.readyState === 0){}
     ws.send(JSON.stringify(user))
   }
   ws.onmessage = (e) => {
@@ -51,13 +52,13 @@ const Game: Component = () => {
 
   const moveNext = async (data: Result) => {
     await postData(data)
-    navigate('/rank', { state: { name: name() } })
+    navigate('/rank');
   }
 
   return (
-    <>
-      <p>{name()}</p>
-      <p>{score()}</p>
+    <div class='wrap'>
+      <p class='name'>{name()}</p>
+      <p class='score'>{score()}</p>
       <Show
         when={isStart()}
         fallback={
@@ -69,7 +70,7 @@ const Game: Component = () => {
       >
         <button onClick={() => setIsStart(true)}>ゲームスタート</button>
       </Show>
-    </>
+    </div>
   )
 }
 

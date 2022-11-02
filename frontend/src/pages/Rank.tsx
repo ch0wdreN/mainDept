@@ -1,23 +1,15 @@
 import type { Component } from 'solid-js'
-import { useNavigate, useLocation } from '@solidjs/router'
+import { useNavigate } from '@solidjs/router'
 import Ranking from '@c/Ranking'
 import axios from 'axios'
 import { createEffect, createSignal } from 'solid-js'
 import { Result } from '~/models/Result'
+import JSConfetti from "js-confetti";
 import '~/styles/Rank.scss'
 
 const API_URL = 'https://main-dept-api.deno.dev'
-
+const confetti = new JSConfetti();
 const Rank: Component = () => {
-  const location = useLocation()
-  const name = () => {
-    try {
-      return (location.state as { name: string }).name
-    } catch (error) {
-      console.error(error)
-      return 'default'
-    }
-  }
   const [allResult, setAllResult] = createSignal<Result[]>([])
   createEffect(() => {
     axios.get(`${API_URL}/get`).then((res) => {
@@ -25,16 +17,17 @@ const Rank: Component = () => {
     })
   })
   const navigate = useNavigate();
+  confetti.addConfetti();
 
   return (
-    <>
+    <div class='wrap'>
      <div class='ranking'>
        <ol>
-         <Ranking data={allResult()} name={name()} />
+         <Ranking data={allResult()}/>
        </ol>
      </div>
       <button onClick={() => navigate('/')}>Topへ戻る</button>
-    </>
+    </div>
   )
 }
 

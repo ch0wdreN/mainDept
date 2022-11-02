@@ -31,7 +31,7 @@ const App: Component = () => {
   const Routes = useRoutes(routes)
   return (
     <>
-      <h1 class='title'>キッキングスナイパー</h1>
+      <h1 class='title'>Kicking Sniper</h1>
       <Router>
         <Routes />
       </Router>

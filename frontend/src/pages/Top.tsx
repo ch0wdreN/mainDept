@@ -12,16 +12,16 @@ const Top: Component = () => {
     setName((e.target as HTMLInputElement).value)
   }
   return (
-    <>
+    <div class='wrap'>
       <form class='form'>
         <div class='container'>
           <input class='input' placeholder='名前を入力してください' onInput={onInputHandler} type='text'/>
-          <p>UserName: {name()}</p>
+          <p>ユーザー名: {name() === 'default' ? "" : name()}</p>
           <button onClick={() => navigate('/game', {state: {name: name()}})}>次へ</button>
         </div>
       </form>
-      <input type='button' onClick={() => navigate('/admin')} value='管理者'/>
-    </>
+      <input type='button' onClick={() => navigate('/admin')} value='管理者' id='toAdmin'/>
+    </div>
   )
 }
 
