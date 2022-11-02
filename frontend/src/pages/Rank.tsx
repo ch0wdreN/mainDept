@@ -8,6 +8,7 @@ import JSConfetti from "js-confetti";
 import '~/styles/Rank.scss'
 
 const API_URL = 'https://main-dept-api.deno.dev'
+//const API_URL = 'http://localhost:8000'
 const confetti = new JSConfetti();
 const Rank: Component = () => {
   const [allResult, setAllResult] = createSignal<Result[]>([])

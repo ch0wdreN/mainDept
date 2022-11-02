@@ -7,6 +7,7 @@ import { Result } from '~/models/Result'
 import '~/styles/Game.scss'
 
 const API_URL = 'https://main-dept-api.deno.dev'
+//const API_URL = 'http://localhost:8000'
 const Game: Component = () => {
   const [score, setScore] = createSignal(0)
   const [isStart, setIsStart] = createSignal(false)
@@ -21,6 +22,7 @@ const Game: Component = () => {
   }
   const navigate = useNavigate()
   const endpoint = 'wss://main-dept-api.deno.dev/ws'
+  //const endpoint = 'ws://localhost:8000/ws'
   const ws = new WebSocket(endpoint)
   const user: Score = {
     type: 'name',

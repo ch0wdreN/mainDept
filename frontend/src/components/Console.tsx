@@ -15,6 +15,7 @@ const Console: Component = () => {
   const [name, setName] = createSignal<string>('');
 
   const endpoint = 'wss://main-dept-api.deno.dev/ws'
+  //const endpoint = 'ws://localhost:8000/ws'
   const ws = new WebSocket(endpoint)
   let receiveData;
   ws.onopen = () => {
@@ -32,14 +33,17 @@ const Console: Component = () => {
   }
   ws.onmessage = (message) => {
     receiveData = JSON.parse(message.data)
-    console.log(receiveData);
     switch (receiveData.type) {
       case 'connection':
         console.log(receiveData);
         break;
       case 'name':
+        console.log(receiveData)
         setName(receiveData.name)
         alert('名前が入力されました');
+        break;
+      case 'result':
+        console.log(receiveData);
         break;
       default:
         console.log('something caught');

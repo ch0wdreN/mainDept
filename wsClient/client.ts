@@ -54,13 +54,19 @@ const cli = async (event: MessageEvent): Promise<void> => {
   }
 };
 
-const socket = new WebSocket('wss://main-dept-api.deno.dev/ws');
+//const socket = new WebSocket('wss://main-dept-api.deno.dev/ws');
+const socket = new WebSocket('ws://localhost:8000/ws');
 socket.onopen = () => {
   const connection: Connection = {
     type: 'connection',
     message: 'ws connected!'
   };
-  socket.send(JSON.stringify(connection));
+  while(true) {
+    if(socket.readyState === WebSocket.OPEN){
+      socket.send(JSON.stringify(connection));
+      break;
+    }
+  }
 };
 socket.onmessage = async (e: MessageEvent) => {
   await onMessage(e);
