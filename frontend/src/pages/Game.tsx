@@ -4,14 +4,16 @@ import { Score } from '~/models/Score'
 import { createSignal, Show } from 'solid-js'
 import axios from 'axios'
 import { Result } from '~/models/Result'
+import JSConfetti from "js-confetti";
 import '~/styles/Game.scss'
 
-const API_URL = 'https://main-dept-api.deno.dev'
-//const API_URL = 'http://localhost:8000'
+//const API_URL = 'https://main-dept-api.deno.dev'
+const API_URL = 'http://localhost:8000'
 const Game: Component = () => {
   const [score, setScore] = createSignal(0)
   const [isStart, setIsStart] = createSignal(false)
   const location = useLocation()
+  const confetti = new JSConfetti();
   const name = () => {
     try {
       return (location.state as { name: string }).name
@@ -21,8 +23,8 @@ const Game: Component = () => {
     }
   }
   const navigate = useNavigate()
-  const endpoint = 'wss://main-dept-api.deno.dev/ws'
-  //const endpoint = 'ws://localhost:8000/ws'
+  //const endpoint = 'wss://main-dept-api.deno.dev/ws'
+  const endpoint = 'ws://localhost:8000/ws'
   const ws = new WebSocket(endpoint)
   const user: Score = {
     type: 'name',
@@ -38,6 +40,7 @@ const Game: Component = () => {
     const receivedData = JSON.parse(e.data)
     if (receivedData.type === 'result') {
       setScore(receivedData.score)
+      confetti.addConfetti();
     }
   }
 
@@ -54,7 +57,7 @@ const Game: Component = () => {
 
   const moveNext = async (data: Result) => {
     await postData(data)
-    navigate('/rank');
+    navigate('/');
   }
 
   return (
@@ -65,7 +68,7 @@ const Game: Component = () => {
         when={isStart()}
         fallback={
           <button onClick={() => moveNext({ name: name(), score: score() })}>
-            次へ
+            Topへ
           </button>
         }
         keyed

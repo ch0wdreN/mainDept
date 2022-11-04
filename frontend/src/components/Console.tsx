@@ -14,8 +14,8 @@ const Console: Component = () => {
   const [total, setTotal] = createSignal<number>(0);
   const [name, setName] = createSignal<string>('');
 
-  const endpoint = 'wss://main-dept-api.deno.dev/ws'
-  //const endpoint = 'ws://localhost:8000/ws'
+  //const endpoint = 'wss://main-dept-api.deno.dev/ws'
+  const endpoint = 'ws://localhost:8000/ws'
   const ws = new WebSocket(endpoint)
   let receiveData;
   ws.onopen = () => {
