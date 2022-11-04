@@ -14,10 +14,10 @@ const Top: Component = () => {
   return (
     <div class='wrap'>
       <form class='form'>
-        <div class='container'>
+        <div class='containerTop'>
           <input class='input' placeholder='名前を入力してください' onInput={onInputHandler} type='text'/>
-          <p>ユーザー名: {name() === 'default' ? "" : name()}</p>
-          <button onClick={() => navigate('/game', {state: {name: name()}})}>次へ</button>
+          <p class='username'>ユーザー名: {name() === 'default' ? "" : name()}</p>
+          <button onClick={() => navigate('/game', {state: {name: name()}})} class='toNext'>次へ</button>
         </div>
       </form>
       <input type='button' onClick={() => navigate('/admin')} value='管理者' id='toAdmin'/>

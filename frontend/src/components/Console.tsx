@@ -8,6 +8,7 @@ interface Scores extends Score {
 }
 
 const Console: Component = () => {
+  let num = 0;
   const [first, setFirst] = createSignal<number>(0);
   const [second, setSecond] = createSignal<number>(0);
   const [third, setThird] = createSignal<number>(0);
@@ -67,17 +68,18 @@ const Console: Component = () => {
   }
 
   const sendData = (score: number = total()) => {
+    console.log('push')
     const data: Score = {
       type: 'result',
       name: name(),
       score: score
+    };
+    if (num!==0){
+      ws.send('test');
     }
     ws.send(JSON.stringify(data));
   }
 
-  const clear = () => {
-
-  }
   return (
     <>
       <h3>管理者</h3>
@@ -91,7 +93,6 @@ const Console: Component = () => {
         <input type='button' value='3回目得点送信' onClick={() => sendData()}/>
       </form>
       <p>total: {setTotal(first() + second() + third())}</p>
-      <input type='button' value='クリア' onClick={clear}/>
     </>
   )
 }

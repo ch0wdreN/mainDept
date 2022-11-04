@@ -1,0 +1,44 @@
+.wrap {
+  text-align: center;
+  .container {
+
+    border: solid 10px red;
+    background-color: #fff;
+    display: inline-block;
+    width: 80%;
+    animation: chika infinite 1s;
+
+    .name {
+      font-size: 50px;
+    }
+
+    .score {
+      font-size: 50px;
+      font-weight: bolder;
+    }
+  }
+
+  .toTop {
+    width: 50%;
+    margin-top: 50px;
+    font-size: 50px;
+    background-color: #fff;
+    padding: 1em;
+    font-weight: bold;
+  }
+}
+ @keyframes chika {
+   0% {
+     border: solid 10px transparent;
+   }
+   49% {
+     border: solid 10px transparent;
+   }
+   50% {
+     border: solid 10px red;
+   }
+   100% {
+     border: solid 10px red;
+   }
+
+ }

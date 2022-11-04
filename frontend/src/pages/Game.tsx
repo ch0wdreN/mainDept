@@ -56,26 +56,21 @@ const Game: Component = () => {
   }
 
   const moveNext = async (data: Result) => {
-    await postData(data)
+    await postData(data);
+    ws.send(JSON.stringify({type: 'update'}));
     navigate('/');
   }
 
   return (
     <div class='wrap'>
-      <p class='name'>{name()}</p>
-      <p class='score'>{score()}</p>
-      <Show
-        when={isStart()}
-        fallback={
-          <button onClick={() => moveNext({ name: name(), score: score() })}>
+      <div class='container'>
+        <p class='name'>{name()}</p>
+        <p class='score'>{score()}</p>
+      </div>
+      <button onClick={() => moveNext({ name: name(), score: score() })} class='toTop'>
             Topへ
-          </button>
-        }
-        keyed
-      >
-        <button onClick={() => setIsStart(true)}>ゲームスタート</button>
-      </Show>
-    </div>
+      </button>
+      </div>
   )
 }
 

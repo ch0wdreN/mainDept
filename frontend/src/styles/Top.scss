@@ -1,0 +1,29 @@
+.wrap {
+  text-align: center;
+  .form {
+    .containerTop {
+      input {
+        width: 80%;
+        height: 40%;
+        padding: 1em;
+        font-size: 50px;
+      }
+
+      .username {
+        font-size: 50px;
+        font-weight: bold;
+        background: #fff;
+        border-bottom: solid 5px #000;
+        display: inline-block;
+        width: 60%;
+      }
+    }
+  }
+  .toNext{
+    background-color: #fff;
+    width: 50%;
+    font-weight: bold;
+    font-size: 50px;
+  }
+
+}

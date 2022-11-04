@@ -54,8 +54,8 @@ const cli = async (event: MessageEvent): Promise<void> => {
   }
 };
 
-const socket = new WebSocket('wss://main-dept-api.deno.dev/ws');
-//const socket = new WebSocket('ws://localhost:8000/ws');
+//const socket = new WebSocket('wss://main-dept-api.deno.dev/ws');
+const socket = new WebSocket('ws://localhost:8000/ws');
 socket.onopen = () => {
   const connection: Connection = {
     type: 'connection',

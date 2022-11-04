@@ -10,7 +10,7 @@ const Ranking: Component<{ data: Result[]}> = (props) => {
           const { name, score } = result;
             return (
               <li>
-                {name}さん {score}点
+                {name}さん <span class='score'>{score}</span>点
               </li>
             )}}
       </For>
